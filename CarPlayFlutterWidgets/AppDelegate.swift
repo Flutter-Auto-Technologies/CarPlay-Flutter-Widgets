@@ -14,17 +14,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CPApplicationDelegate, CP
     
     var carPlayWindow: CPWindow?
     var interfaceController: CPInterfaceController?
-    var mapTemplate: CPMapTemplate = {
+    lazy var mapTemplate: CPMapTemplate = {
         let mapTemplate = CPMapTemplate()
         
-        let searchBarButton = CPBarButton(type: .text)
+        let searchBarButton = CPBarButton(type: .text) { (barButton) in
+            DispatchQueue.main.async {
+                self.interactionChannel?.invokeMethod("incrementCounter", arguments: nil)
+            }
+        }
         searchBarButton.title = "     +     "
         mapTemplate.leadingNavigationBarButtons = [searchBarButton]
         
         return mapTemplate
     }()
     
-    lazy var flutterEngine = FlutterEngine(name: "my flutter engine")
+    lazy var flutterEngine = FlutterEngine(name: "CarPlayFlutterWidgets Flutter engine")
+    
+    var interactionChannel : FlutterMethodChannel?
     
     func application(_ application: UIApplication, didConnectCarInterfaceController interfaceController: CPInterfaceController, to window: CPWindow) {
         self.interfaceController = interfaceController
@@ -34,7 +40,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CPApplicationDelegate, CP
         interfaceController.setRootTemplate(mapTemplate, animated: true)
         
         let flutterEngine = (UIApplication.shared.delegate as! AppDelegate).flutterEngine
-        window.rootViewController = FlutterViewController(engine: flutterEngine, nibName: nil, bundle: nil)
+        let controller = FlutterViewController(engine: flutterEngine, nibName: nil, bundle: nil)
+        window.rootViewController = controller
+        interactionChannel = FlutterMethodChannel.init(name: "com.navideck.CarPlayFlutterWidgets/interaction", binaryMessenger: controller.binaryMessenger)
+
     }
     
     func application(_ application: UIApplication, didDisconnectCarInterfaceController interfaceController: CPInterfaceController, from window: CPWindow) {

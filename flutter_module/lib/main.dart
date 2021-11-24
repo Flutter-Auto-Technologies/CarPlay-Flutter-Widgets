@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() => runApp(const MyApp());
 
@@ -46,6 +47,18 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  static const methodChannel =
+      MethodChannel('com.navideck.CarPlayFlutterWidgets/interaction');
+
+  @override
+  void initState() {
+    methodChannel.setMethodCallHandler((call) async {
+      if (call.method == 'incrementCounter') {
+        _incrementCounter();
+      }
+    });
+    super.initState();
+  }
 
   void _incrementCounter() {
     setState(() {
