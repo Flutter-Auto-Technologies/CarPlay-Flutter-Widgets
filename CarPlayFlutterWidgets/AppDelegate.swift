@@ -7,6 +7,7 @@
 
 import UIKit
 import CarPlay
+import Flutter
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, CPApplicationDelegate, CPMapTemplateDelegate {
@@ -23,13 +24,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CPApplicationDelegate, CP
         return mapTemplate
     }()
     
+    lazy var flutterEngine = FlutterEngine(name: "my flutter engine")
+    
     func application(_ application: UIApplication, didConnectCarInterfaceController interfaceController: CPInterfaceController, to window: CPWindow) {
         self.interfaceController = interfaceController
         self.carPlayWindow = window
         
         mapTemplate.mapDelegate = self
         interfaceController.setRootTemplate(mapTemplate, animated: true)
-        window.rootViewController = UIViewController()
+        
+        let flutterEngine = (UIApplication.shared.delegate as! AppDelegate).flutterEngine
+        window.rootViewController = FlutterViewController(engine: flutterEngine, nibName: nil, bundle: nil)
     }
     
     func application(_ application: UIApplication, didDisconnectCarInterfaceController interfaceController: CPInterfaceController, from window: CPWindow) {
@@ -39,6 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CPApplicationDelegate, CP
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        flutterEngine.run();
         return true
     }
 
