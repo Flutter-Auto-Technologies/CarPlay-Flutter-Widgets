@@ -13,7 +13,7 @@ The project is using the Map CarPlay template which allows rendering a custom UI
 Flutter is being added to the existing iOS app as a Flutter module. The custom UIViewController that is provided to CarPlay is a FlutterViewController which contains the Flutter widgets.
 
 ## Limitations
-While being able to render anything we want, the rendred FlutterViewController is not interactive. That means it does not respond directly to touch input. Intead we have to rely on the UI interactions that CarPlay's Map template provides. It is totally possible to customize the buttons of the Map Template (like we did with the + button) and interact with your Flutter widgets using those. You could also use touch gestures or Siri.
+While being able to render anything we want, the rendered FlutterViewController is not interactive. That means it does not respond directly to touch input. Intead we have to rely on the UI interactions that CarPlay's Map template provides. It is totally possible to customize the buttons of the Map Template (like we did with the + button) and interact with your Flutter widgets using those. You could also use touch gestures or Siri.
 
 ## Author
 [Navideck](https://github.com/navideck)
