@@ -2,6 +2,8 @@
 
 ![CarPlayFlutterWidgets running](CarPlayFlutterWidgets.gif)
 
+[Read the full article](https://link.medium.com/VT0DTgiLPmb)
+
 ## What is this?
 This is a proof of concept of a Flutter based app running on Apple CarPlay app.
 
